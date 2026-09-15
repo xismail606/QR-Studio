@@ -1,0 +1,268 @@
+---
+const presets = [
+  {
+    id: 'modern',
+    name: 'Electric Studio',
+    tagline: 'Dual-tone amber and sage gradient',
+    category: 'SaaS & Tech',
+    dotsColor: '#d4ad63',
+    gradientEnd: '#8dc7a1',
+    eyeColor: '#9a6b25',
+    bg: '#101613',
+    border: 'rgba(212, 173, 99, 0.25)',
+    isDark: true,
+    eyeRadius: 8,
+    centerRadius: 4,
+    dotRadius: 3,
+  },
+  {
+    id: 'cyber',
+    name: 'Cyberpunk Neon',
+    tagline: 'Sage and amber on obsidian matrix',
+    category: 'Gaming & Web3',
+    dotsColor: '#8dc7a1',
+    gradientEnd: '#d4ad63',
+    eyeColor: '#8dc7a1',
+    bg: '#0b0f0d',
+    border: 'rgba(141, 199, 161, 0.25)',
+    isDark: true,
+    eyeRadius: 14,
+    centerRadius: 6,
+    dotRadius: 3.5,
+  },
+  {
+    id: 'minimal',
+    name: 'Monolith Minimal',
+    tagline: 'Swiss typographic stark contrast',
+    category: 'Architecture & Editorial',
+    dotsColor: '#090a0f',
+    gradientEnd: '#090a0f',
+    eyeColor: '#090a0f',
+    bg: '#f8fafc',
+    border: 'rgba(0, 0, 0, 0.12)',
+    isDark: false,
+    eyeRadius: 0,
+    centerRadius: 0,
+    dotRadius: 0,
+  },
+  {
+    id: 'luxury',
+    name: 'Luxury Noir',
+    tagline: 'Burnished gold with charcoal depth',
+    category: 'Hospitality & Luxury',
+    dotsColor: '#1c1917',
+    gradientEnd: '#c9a227',
+    eyeColor: '#c9a227',
+    bg: '#faf8f2',
+    border: 'rgba(201, 162, 39, 0.3)',
+    isDark: false,
+    eyeRadius: 8,
+    centerRadius: 5,
+    dotRadius: 2,
+  },
+  {
+    id: 'gradient',
+    name: 'Sunset Fusion',
+    tagline: 'Warm terracotta to amber gradient',
+    category: 'Consumer & Events',
+    dotsColor: '#b86f5d',
+    gradientEnd: '#d4ad63',
+    eyeColor: '#9a6b25',
+    bg: '#ffffff',
+    border: 'rgba(184, 111, 93, 0.25)',
+    isDark: false,
+    eyeRadius: 10,
+    centerRadius: 5,
+    dotRadius: 3,
+  },
+  {
+    id: 'social',
+    name: 'Social Pop',
+    tagline: 'Radial dots with high-contrast eyes',
+    category: 'Creator & Social',
+    dotsColor: '#8f5c4d',
+    gradientEnd: '#d4ad63',
+    eyeColor: '#b86f5d',
+    bg: '#ffffff',
+    border: 'rgba(143, 92, 77, 0.25)',
+    isDark: false,
+    eyeRadius: 14,
+    centerRadius: 7,
+    dotRadius: 3.5,
+  },
+];
+---
+<section id="templates" class="py-20 md:py-28 lg:py-32 border-t border-[var(--color-border)] bg-[var(--color-bg-panel)]/30 reveal-init overflow-hidden">
+  <div class="mx-auto max-w-page px-4 sm:px-6">
+    <!-- Header with Scroll Navigation Controls -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+      <div class="max-w-xl">
+        <h2 data-i18n="home.presetsTitle" class="text-heading-xl font-display font-semibold tracking-tight text-[var(--color-text)] mb-3">
+          Curated Studio Presets
+        </h2>
+        <p data-i18n="home.presetsDesc" class="text-body text-[var(--color-text-secondary)] leading-relaxed">
+          Pre-calibrated colorways and geometry profiles designed to maintain maximum ISO scannability across diverse surfaces.
+        </p>
+      </div>
+
+      <!-- Controls: Track Arrows + View All -->
+      <div class="flex items-center gap-3 self-start sm:self-auto">
+        <button
+          type="button"
+          id="presets-scroll-left"
+          class="w-9 h-9 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-card)] flex items-center justify-center text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:border-[var(--color-accent)] transition-colors"
+          aria-label="Scroll presets left"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          id="presets-scroll-right"
+          class="w-9 h-9 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-card)] flex items-center justify-center text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:border-[var(--color-accent)] transition-colors"
+          aria-label="Scroll presets right"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+          </svg>
+        </button>
+        <a 
+          href="/generator" 
+          class="ml-2 font-mono text-xs font-semibold text-[var(--color-accent)] hover:underline"
+        >
+          <span data-i18n="home.studio">Studio &rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Horizontal Scroll-Snap Track -->
+    <div 
+      id="presets-track" 
+      class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 pt-2 scrollbar-none -mx-4 px-4 sm:-mx-6 sm:px-6"
+      tabindex="0"
+      role="region"
+      aria-label="Preset gallery slider"
+    >
+      {presets.map((p) => (
+        <a 
+          href={`/generator?preset=${p.id}`} 
+          class="snap-start shrink-0 w-[290px] sm:w-[320px] group double-bezel transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-accent)] focus:outline-none"
+        >
+          <div class="double-bezel-inner p-5 flex flex-col justify-between h-full">
+            <!-- Stylized Mini QR Canvas -->
+            <div 
+              class="relative rounded-xl p-6 mb-5 flex flex-col items-center justify-center transition-transform duration-300 group-hover:scale-[1.02] shadow-sm"
+              style={`background: ${p.bg}; border: 1px solid ${p.border};`}
+            >
+              <svg viewBox="0 0 100 100" class="w-32 h-32 drop-shadow-sm" aria-label={`${p.name} preset specimen`}>
+                <defs>
+                  <linearGradient id={`preset-grad-${p.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color={p.dotsColor} />
+                    <stop offset="100%" stop-color={p.gradientEnd} />
+                  </linearGradient>
+                </defs>
+
+                <!-- Finder Eyes -->
+                <rect x="6" y="6" width="26" height="26" rx={p.eyeRadius} fill="none" stroke={p.eyeColor} stroke-width="4" />
+                <rect x="13" y="13" width="12" height="12" rx={p.centerRadius} fill={p.eyeColor} />
+
+                <rect x="68" y="6" width="26" height="26" rx={p.eyeRadius} fill="none" stroke={p.eyeColor} stroke-width="4" />
+                <rect x="75" y="13" width="12" height="12" rx={p.centerRadius} fill={p.eyeColor} />
+
+                <rect x="6" y="68" width="26" height="26" rx={p.eyeRadius} fill="none" stroke={p.eyeColor} stroke-width="4" />
+                <rect x="13" y="75" width="12" height="12" rx={p.centerRadius} fill={p.eyeColor} />
+
+                <!-- Data Matrix -->
+                <g fill={`url(#preset-grad-${p.id})`}>
+                  <circle cx="42" cy="14" r="2.5"/>
+                  <circle cx="50" cy="14" r="2.5"/>
+                  <circle cx="58" cy="14" r="2.5"/>
+                  <circle cx="14" cy="42" r="2.5"/>
+                  <circle cx="14" cy="50" r="2.5"/>
+                  <circle cx="14" cy="58" r="2.5"/>
+
+                  <rect x="39" y="39" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="47" y="39" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="55" y="39" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="39" y="47" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="55" y="47" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="39" y="55" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="47" y="55" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="55" y="55" width="6" height="6" rx={p.dotRadius} />
+
+                  <rect x="39" y="23" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="47" y="23" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="55" y="23" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="23" y="39" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="23" y="47" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="23" y="55" width="6" height="6" rx={p.dotRadius} />
+
+                  <rect x="71" y="39" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="79" y="39" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="87" y="39" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="71" y="47" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="87" y="47" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="71" y="55" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="79" y="55" width="6" height="6" rx={p.dotRadius} />
+
+                  <rect x="39" y="71" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="47" y="71" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="55" y="71" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="39" y="79" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="47" y="79" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="55" y="87" width="6" height="6" rx={p.dotRadius} />
+
+                  <rect x="71" y="71" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="79" y="71" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="87" y="71" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="71" y="79" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="87" y="79" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="79" y="87" width="6" height="6" rx={p.dotRadius} />
+                  <rect x="87" y="87" width="6" height="6" rx={p.dotRadius} />
+                </g>
+              </svg>
+            </div>
+
+            <!-- Preset Card Metadata -->
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-display font-semibold text-sm text-[var(--color-text)]">
+                  <span data-i18n={`home.preset.${p.id}.name`}>{p.name}</span>
+                </h3>
+                <span class="font-mono text-[10px] text-[var(--color-accent)] font-medium bg-[var(--color-accent-light)] px-1.5 py-0.5 rounded">
+                <span data-i18n={`home.preset.${p.id}.category`}>{p.category}</span>
+                </span>
+              </div>
+              <p class="text-caption text-[var(--color-text-secondary)] mb-4">
+                <span data-i18n={`home.preset.${p.id}.tagline`}>{p.tagline}</span>
+              </p>
+
+              <div class="pt-3 border-t border-[var(--color-border)] flex items-center justify-between font-mono text-[11px] text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors">
+                <span data-i18n="home.loadPreset">Load preset</span>
+                <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const track = document.getElementById('presets-track');
+  const leftBtn = document.getElementById('presets-scroll-left');
+  const rightBtn = document.getElementById('presets-scroll-right');
+
+  if (track && leftBtn && rightBtn) {
+    leftBtn.addEventListener('click', () => {
+      track.scrollBy({ left: -320, behavior: 'smooth' });
+    });
+    rightBtn.addEventListener('click', () => {
+      track.scrollBy({ left: 320, behavior: 'smooth' });
+    });
+  }
+</script>

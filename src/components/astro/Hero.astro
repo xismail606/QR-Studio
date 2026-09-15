@@ -1,0 +1,254 @@
+---
+---
+<section class="relative pt-12 pb-16 md:pt-20 md:pb-28 overflow-hidden">
+  <!-- Subtle ambient radial light behind hero -->
+  <div class="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 ambient-hero opacity-60 dark:opacity-80"></div>
+
+  <div class="relative mx-auto max-w-page px-4 sm:px-6">
+    <div class="grid items-center gap-10 md:gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
+      <!-- Left Column: Asymmetric Split Hero Copy -->
+      <div class="flex flex-col items-start text-left">
+        <!-- Quiet Eyebrow -->
+        <div class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-card)]/80 px-3 py-1 mb-5 sm:mb-6 glass-card">
+          <span class="font-mono text-micro uppercase tracking-wider text-[var(--color-accent)] font-semibold" data-i18n="hero.badge">
+            Vector Precision Engine
+          </span>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-display-lg font-display font-semibold tracking-tight text-[var(--color-text)] mb-5 sm:mb-6 max-w-xl" data-i18n="hero.title">
+          Parametric QR codes built for production design
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-base sm:text-body-lg text-[var(--color-text-secondary)] mb-6 sm:mb-8 max-w-lg leading-relaxed" data-i18n="hero.subtitle">
+          Shape modules, calibrate error correction, and embed brand marks in mathematical vector paths. Rendered purely in your browser with zero server roundtrips.
+        </p>
+
+        <!-- Button-in-button CTA pattern -->
+        <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+          <a
+            href="/generator"
+            class="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-6 py-2.5 text-xs sm:text-sm font-medium shadow-md shadow-[var(--color-accent)]/20 transition-all hover:scale-[1.02] active:scale-[0.98] btn-tactile"
+          >
+            <span data-i18n="hero.openStudio">Open Studio</span>
+            <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+            </svg>
+          </a>
+
+          <a
+            href="#templates"
+            class="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors"
+          >
+            <span data-i18n="hero.explorePresets">Explore Presets</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Double-Bezel Studio Centerpiece (No fake browser mockup) -->
+      <div class="relative mx-auto w-full max-w-lg lg:max-w-none">
+        <!-- Ambient Underglow -->
+        <div class="absolute -inset-2 rounded-[32px] bg-gradient-to-tr from-[var(--color-accent)]/20 via-[var(--color-accent-hover)]/10 to-transparent blur-2xl opacity-70 pointer-events-none"></div>
+
+        <!-- Double-Bezel Container -->
+        <div class="double-bezel relative">
+          <div class="double-bezel-inner p-4 sm:p-6 md:p-8 flex flex-col items-center">
+            <!-- Studio Toolbar Header (Real Controls, Not Fake OS Chrome) -->
+            <div class="w-full flex items-center justify-between pb-3 sm:pb-4 mb-4 sm:mb-6 border-b border-[var(--color-border)]">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-[var(--color-accent)]"></span>
+                <span data-i18n="preview.liveViewport" class="font-mono text-xs font-medium text-[var(--color-text)]">Live Vector Preview</span>
+              </div>
+
+              <!-- Interactive Geometry Switcher Preview -->
+              <div id="hero-style-tabs" class="inline-flex items-center rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-panel)] p-0.5 text-[11px] font-mono">
+                <button type="button" data-style="smooth" class="hero-tab-btn active px-2 sm:px-2.5 py-1 rounded-md text-[var(--color-text)] bg-[var(--color-bg-card)] font-medium shadow-sm transition-all">
+                  <span data-i18n="shape.rounded">Smooth</span>
+                </button>
+                <button type="button" data-style="dots" class="hero-tab-btn px-2 sm:px-2.5 py-1 rounded-md text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-all">
+                  <span data-i18n="shape.dots">Dots</span>
+                </button>
+                <button type="button" data-style="tech" class="hero-tab-btn px-2 sm:px-2.5 py-1 rounded-md text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-all">
+                  <span data-i18n="home.matrix">Tech</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Precision QR Graphic Canvas -->
+            <div class="relative w-full max-w-[240px] sm:max-w-[280px] aspect-square rounded-2xl bg-[var(--color-bg-panel)] border border-[var(--color-border-subtle)] p-4 sm:p-5 flex items-center justify-center shadow-inner">
+              <svg id="hero-qr-svg" viewBox="0 0 160 160" class="w-full h-full transition-all duration-300" aria-label="Engineered Precision QR Vector">
+                <defs>
+                  <linearGradient id="heroAccentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="var(--color-accent)" />
+                    <stop offset="100%" stop-color="var(--color-accent-hover)" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Top Left Finder Eye -->
+                <rect id="hero-eye-tl" x="10" y="10" width="40" height="40" rx="10" fill="none" stroke="url(#heroAccentGrad)" stroke-width="6"/>
+                <rect id="hero-eye-tl-c" x="20" y="20" width="20" height="20" rx="6" fill="url(#heroAccentGrad)"/>
+
+                <!-- Top Right Finder Eye -->
+                <rect id="hero-eye-tr" x="110" y="10" width="40" height="40" rx="10" fill="none" stroke="url(#heroAccentGrad)" stroke-width="6"/>
+                <rect id="hero-eye-tr-c" x="120" y="20" width="20" height="20" rx="6" fill="url(#heroAccentGrad)"/>
+
+                <!-- Bottom Left Finder Eye -->
+                <rect id="hero-eye-bl" x="10" y="110" width="40" height="40" rx="10" fill="none" stroke="url(#heroAccentGrad)" stroke-width="6"/>
+                <rect id="hero-eye-bl-c" x="20" y="120" width="20" height="20" rx="6" fill="url(#heroAccentGrad)"/>
+
+                <!-- Data Matrix Elements with dynamic class -->
+                <g id="hero-matrix-modules" fill="var(--color-text)" class="matrix-smooth">
+                  <!-- Timing grid -->
+                  <rect x="18" y="60" width="8" height="8" rx="2.5" class="qr-mod"/>
+                  <rect x="18" y="75" width="8" height="8" rx="2.5" class="qr-mod"/>
+                  <rect x="18" y="90" width="8" height="8" rx="2.5" class="qr-mod"/>
+                  <rect x="60" y="18" width="8" height="8" rx="2.5" class="qr-mod"/>
+                  <rect x="75" y="18" width="8" height="8" rx="2.5" class="qr-mod"/>
+                  <rect x="90" y="18" width="8" height="8" rx="2.5" class="qr-mod"/>
+
+                  <!-- Internal clusters -->
+                  <rect x="60" y="55" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="75" y="55" width="10" height="10" rx="3" fill="url(#heroAccentGrad)" class="qr-mod"/>
+                  <rect x="90" y="55" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="60" y="70" width="10" height="10" rx="3" fill="url(#heroAccentGrad)" class="qr-mod"/>
+                  <rect x="90" y="70" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="60" y="85" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="75" y="85" width="10" height="10" rx="3" fill="url(#heroAccentGrad)" class="qr-mod"/>
+                  <rect x="90" y="85" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="105" y="85" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="120" y="85" width="10" height="10" rx="3" class="qr-mod"/>
+
+                  <rect x="110" y="60" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="125" y="60" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="140" y="60" width="10" height="10" rx="3" fill="url(#heroAccentGrad)" class="qr-mod"/>
+                  <rect x="110" y="110" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="125" y="110" width="10" height="10" rx="3" fill="url(#heroAccentGrad)" class="qr-mod"/>
+                  <rect x="140" y="110" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="110" y="125" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="125" y="140" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="140" y="140" width="10" height="10" rx="3" fill="url(#heroAccentGrad)" class="qr-mod"/>
+
+                  <rect x="60" y="110" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="75" y="110" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="60" y="125" width="10" height="10" rx="3" fill="url(#heroAccentGrad)" class="qr-mod"/>
+                  <rect x="75" y="125" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="60" y="140" width="10" height="10" rx="3" class="qr-mod"/>
+                  <rect x="75" y="140" width="10" height="10" rx="3" fill="url(#heroAccentGrad)" class="qr-mod"/>
+                </g>
+
+                <!-- Center Brand Badge -->
+                <rect x="68" y="68" width="24" height="24" rx="7" fill="var(--color-bg)" stroke="var(--color-border)" stroke-width="2"/>
+                <circle cx="80" cy="80" r="7" fill="url(#heroAccentGrad)"/>
+              </svg>
+            </div>
+
+            <!-- Technical Specification Footnote -->
+            <div class="mt-6 w-full pt-4 border-t border-[var(--color-border)] flex items-center justify-between text-xs font-mono text-[var(--color-text-muted)]">
+          <span data-i18n="home.levelH">EC Level H (30%)</span>
+              <span>29x29 Matrix</span>
+          <span data-i18n="home.vectorPrecision" class="text-[var(--color-accent)] font-medium">SVG Vector</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Studio Capability Specs Bar (Clean Asymmetric Ribbon) -->
+<section class="border-y border-[var(--color-border)] bg-[var(--color-bg-card)]/50 py-5">
+  <div class="mx-auto max-w-page px-4 sm:px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left">
+      <div class="flex flex-col gap-1">
+        <span class="font-mono text-micro uppercase tracking-wider text-[var(--color-accent)] font-semibold">
+          <span data-i18n="home.architecture">Architecture</span>
+        </span>
+        <span class="font-display text-sm font-semibold text-[var(--color-text)]">
+          <span data-i18n="home.clientSide">100% Client-Side</span>
+        </span>
+        <span class="text-caption text-[var(--color-text-muted)]">
+          <span data-i18n="home.clientSideDesc">Zero data leaves your local browser thread</span>
+        </span>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <span class="font-mono text-micro uppercase tracking-wider text-[var(--color-accent)] font-semibold">
+          <span data-i18n="home.geometry">Geometry</span>
+        </span>
+        <span class="font-display text-sm font-semibold text-[var(--color-text)]">
+          <span data-i18n="home.parametricModules">Parametric Modules</span>
+        </span>
+        <span class="text-caption text-[var(--color-text-muted)]">
+          <span data-i18n="home.geometryDesc">Custom squircle, dots, and classy eyes</span>
+        </span>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <span class="font-mono text-micro uppercase tracking-wider text-[var(--color-accent)] font-semibold">
+          <span data-i18n="home.compliance">Compliance</span>
+        </span>
+        <span class="font-display text-sm font-semibold text-[var(--color-text)]">
+          ISO/IEC 18004
+        </span>
+        <span class="text-caption text-[var(--color-text-muted)]">
+          <span data-i18n="home.complianceDesc">WCAG contrast and safe-margin audit</span>
+        </span>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <span class="font-mono text-micro uppercase tracking-wider text-[var(--color-accent)] font-semibold">
+          <span data-i18n="home.pipeline">Pipeline</span>
+        </span>
+        <span class="font-display text-sm font-semibold text-[var(--color-text)]">
+          <span data-i18n="home.infiniteResolution">Infinite Resolution</span>
+        </span>
+        <span class="text-caption text-[var(--color-text-muted)]">
+          <span data-i18n="home.pipelineDesc">Clean SVG vector and 4K lossless raster</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  // Interactive geometry preview tabs in hero
+  const tabBtns = document.querySelectorAll('#hero-style-tabs .hero-tab-btn');
+  const modules = document.querySelectorAll('#hero-matrix-modules .qr-mod');
+  const eyeTl = document.getElementById('hero-eye-tl');
+  const eyeTr = document.getElementById('hero-eye-tr');
+  const eyeBl = document.getElementById('hero-eye-bl');
+
+  tabBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach((b) => {
+        b.classList.remove('active', 'text-[var(--color-text)]', 'bg-[var(--color-bg-card)]', 'font-medium', 'shadow-sm');
+        b.classList.add('text-[var(--color-text-muted)]');
+      });
+      btn.classList.add('active', 'text-[var(--color-text)]', 'bg-[var(--color-bg-card)]', 'font-medium', 'shadow-sm');
+      btn.classList.remove('text-[var(--color-text-muted)]');
+
+      const style = btn.getAttribute('data-style');
+      if (style === 'dots') {
+        modules.forEach((m) => m.setAttribute('rx', '5'));
+        if (eyeTl) eyeTl.setAttribute('rx', '20');
+        if (eyeTr) eyeTr.setAttribute('rx', '20');
+        if (eyeBl) eyeBl.setAttribute('rx', '20');
+      } else if (style === 'tech') {
+        modules.forEach((m) => m.setAttribute('rx', '0'));
+        if (eyeTl) eyeTl.setAttribute('rx', '0');
+        if (eyeTr) eyeTr.setAttribute('rx', '0');
+        if (eyeBl) eyeBl.setAttribute('rx', '0');
+      } else {
+        // smooth / default
+        modules.forEach((m) => m.setAttribute('rx', '3'));
+        if (eyeTl) eyeTl.setAttribute('rx', '10');
+        if (eyeTr) eyeTr.setAttribute('rx', '10');
+        if (eyeBl) eyeBl.setAttribute('rx', '10');
+      }
+    });
+  });
+</script>

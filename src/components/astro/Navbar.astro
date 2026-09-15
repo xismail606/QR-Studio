@@ -1,0 +1,108 @@
+---
+import { ThemeToggle } from '../react/ui/ThemeToggle.jsx';
+import { LanguageToggle } from '../react/ui/LanguageToggle.jsx';
+
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
+const links = [
+  { href: isHome ? '#features' : '/#features', label: 'Features', key: 'nav.features' },
+  { href: isHome ? '#templates' : '/#templates', label: 'Presets', key: 'nav.presets' },
+  { href: isHome ? '#how' : '/#how', label: 'Workflow', key: 'nav.workflow' },
+  { href: isHome ? '#export' : '/#export', label: 'Export', key: 'nav.export' },
+];
+---
+<div class="sticky top-4 z-50 mx-auto w-full max-w-page px-4 sm:px-6">
+  <header class="flex items-center justify-between rounded-full border border-[var(--color-border)] bg-[var(--color-bg-card)]/80 backdrop-blur-xl py-2 px-3 sm:px-4 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300">
+    <a href="/" class="flex items-center gap-2.5 group" aria-label="QR Studio Home">
+      <div class="w-8 h-8 rounded-lg bg-[var(--color-bg-hover)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-accent)] transition-all duration-300 group-hover:scale-105 group-hover:border-[var(--color-accent)]">
+        <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="3" />
+          <path d="M7 7h.01M17 7h.01M7 17h.01M12 7v4M7 12h4M12 17h5M17 12v5" />
+        </svg>
+      </div>
+      <span class="font-display font-semibold text-sm tracking-tight text-[var(--color-text)]" data-i18n="nav.brand">
+        QR Studio
+      </span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-1" aria-label="Primary">
+      {links.map((l) => (
+        <a 
+          href={l.href} 
+          class="rounded-full px-3.5 py-1.5 text-xs font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-text)]"
+          data-i18n={l.key}
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-1.5 sm:gap-2">
+      <LanguageToggle client:load />
+      <ThemeToggle client:visible />
+      {!isHome && (
+        <a 
+          href="/" 
+          class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-hover)] px-3.5 py-2 text-xs font-medium text-[var(--color-text)] hover:border-[var(--color-accent)] transition-colors btn-tactile"
+        >
+          <svg class="w-3.5 h-3.5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+          <span data-i18n="nav.home">Home</span>
+        </a>
+      )}
+
+      <!-- Mobile Menu Toggle Button -->
+      <button 
+        type="button" 
+        id="mobile-nav-toggle"
+        class="md:hidden flex items-center justify-center w-8 h-8 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-hover)] text-[var(--color-text)]"
+        aria-label="Toggle navigation menu"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Dropdown -->
+  <div 
+    id="mobile-nav-menu" 
+    class="hidden md:hidden mt-2 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]/95 backdrop-blur-xl p-3 shadow-xl flex-col gap-1 transition-all"
+  >
+    {links.map((l) => (
+      <a 
+        href={l.href} 
+        class="rounded-xl px-3 py-2 text-xs font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-hover)] hover:text-[var(--color-text)] transition-colors"
+        data-i18n={l.key}
+      >
+        {l.label}
+      </a>
+    ))}
+  </div>
+</div>
+
+<script is:inline>
+  const toggleBtn = document.getElementById('mobile-nav-toggle');
+  const menu = document.getElementById('mobile-nav-menu');
+  if (toggleBtn && menu) {
+    toggleBtn.addEventListener('click', () => {
+      const isHidden = menu.classList.contains('hidden');
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+      } else {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+      }
+    });
+
+    // Close on link click
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+      });
+    });
+  }
+</script>

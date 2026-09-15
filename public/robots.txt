@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://qr-studio.x606.workers.dev/sitemap.xml

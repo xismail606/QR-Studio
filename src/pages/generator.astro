@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/astro/Navbar.astro';
+import Footer from '../components/astro/Footer.astro';
+import { QREditor } from '../components/react/editor/QREditor.jsx';
+---
+<BaseLayout title="QR Studio : Parametric Generator" description="Design and export custom QR codes with logos, gradients, frames and vector precision.">
+  <Navbar />
+  <main class="min-h-[100dvh] overflow-x-hidden">
+    <div class="mx-auto w-full max-w-page px-2 sm:px-6 pt-2 sm:pt-6 pb-16">
+      <div class="mb-5 sm:mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-[var(--color-border)]">
+        <div>
+          <div class="flex items-center gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-[11px] text-[var(--color-text-muted)] mb-1">
+            <a href="/" class="hover:text-[var(--color-text)] transition-colors" data-i18n="gen.home">Home</a>
+            <span>/</span>
+            <span class="text-[var(--color-accent)] font-medium" data-i18n="gen.breadcrumb">Studio Editor</span>
+          </div>
+          <h1 class="text-xl sm:text-2xl md:text-heading-lg font-display font-semibold tracking-tight text-[var(--color-text)]" data-i18n="gen.title">
+            Parametric QR Studio
+          </h1>
+        </div>
+        <div class="flex items-center gap-2 text-[11px] sm:text-xs font-mono text-[var(--color-text-muted)]">
+          <span class="inline-block w-2 h-2 rounded-full bg-[var(--color-success)] shrink-0"></span>
+          <span data-i18n="gen.engineStatus">Engine Active · Client Rendering</span>
+        </div>
+      </div>
+      <QREditor client:only="react" />
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

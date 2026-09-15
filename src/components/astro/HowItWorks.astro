@@ -1,0 +1,111 @@
+---
+const steps = [
+  {
+    phase: 'Phase 01',
+    phaseKey: 'home.phase1Label',
+    titleKey: 'home.phase1',
+    bodyKey: 'home.phase1Body',
+    tagKey: 'home.clientThread',
+    title: 'Payload Configuration',
+    body: 'Input your target URL, plain text payload, or WiFi credentials. Matrix encoding occurs instantaneously inside the browser thread using ISO/IEC 18004 algorithmic standards.',
+    tag: 'Client Thread',
+  },
+  {
+    phase: 'Phase 02',
+    phaseKey: 'home.phase2Label',
+    titleKey: 'home.phase2',
+    bodyKey: 'home.phase2Body',
+    tagKey: 'home.customModules',
+    title: 'Parametric Geometry',
+    body: 'Shape individual modules into radial dots, rounded squircles, or technical cuts. Adjust outer finder radii and inner center markers independently to establish your visual rhythm.',
+    tag: 'Custom Modules',
+  },
+  {
+    phase: 'Phase 03',
+    phaseKey: 'home.phase3Label',
+    titleKey: 'home.phase3',
+    bodyKey: 'home.phase3Body',
+    tagKey: 'home.levelH',
+    title: 'Palette & Emblem Anchor',
+    body: 'Apply tailored monochrome or dual-tone gradients. Center your brand icon or vector emblem with automated Level H error correction that prevents data occlusion.',
+    tag: 'Level H 30%',
+  },
+  {
+    phase: 'Phase 04',
+    phaseKey: 'home.phase4Label',
+    titleKey: 'home.phase4',
+    bodyKey: 'home.phase4Body',
+    tagKey: 'home.svg4k',
+    title: 'Vector Production Export',
+    body: 'Download compound vector SVG files with mathematically clean curves for industrial signage, or lossless 4K raster PNG files optimized for web, print, and mobile apps.',
+    tag: 'SVG & 4K',
+  },
+];
+---
+<section id="how" class="py-20 md:py-28 lg:py-32 border-t border-[var(--color-border)] reveal-init">
+  <div class="mx-auto max-w-page px-4 sm:px-6">
+    <!-- Asymmetric Two-Column Split: Sticky Narrative Left, Vertical Stepper Right -->
+    <div class="grid gap-8 md:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:gap-16 items-start">
+      <!-- Left: Section Narrative Header -->
+      <div class="lg:sticky lg:top-28">
+        <h2 data-i18n="home.workflowTitle" class="text-heading-xl font-display font-semibold tracking-tight text-[var(--color-text)] mb-3 sm:mb-4">
+          Engineered in four precise phases
+        </h2>
+        <p data-i18n="home.workflowDesc" class="text-body text-[var(--color-text-secondary)] leading-relaxed mb-6">
+          Zero telemetry. Zero server roundtrips. Every barcode matrix calculation and curve interpolation runs entirely within your device's browser runtime.
+        </p>
+
+        <!-- Studio Architecture Stat Card -->
+        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 sm:p-6 shadow-sm hidden sm:block">
+          <div class="flex items-center justify-between pb-3 border-b border-[var(--color-border-subtle)]">
+            <span data-i18n="home.runtime" class="font-mono text-xs text-[var(--color-text-muted)]">Runtime Execution</span>
+            <span data-i18n="home.localThread" class="font-mono text-[11px] font-semibold text-[var(--color-success)] bg-[var(--color-success)]/10 px-2 py-0.5 rounded">Local Thread</span>
+          </div>
+          <div class="pt-3.5 space-y-2 font-mono text-[11px] text-[var(--color-text-secondary)]">
+            <div class="flex justify-between">
+              <span data-i18n="home.network">Network Requests:</span>
+              <span class="text-[var(--color-text)] font-semibold">0 reqs</span>
+            </div>
+            <div class="flex justify-between">
+              <span data-i18n="home.renderLatency">Render Latency:</span>
+              <span class="text-[var(--color-text)] font-semibold">&lt; 16 ms</span>
+            </div>
+            <div class="flex justify-between">
+              <span data-i18n="home.retention">Data Retention:</span>
+              <span data-i18n="home.noneEphemeral" class="text-[var(--color-text)] font-semibold">None (ephemeral)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Vertical Progression Stepper -->
+      <div class="relative pl-6 sm:pl-8 border-l border-[var(--color-border)] space-y-6 sm:space-y-8 md:space-y-10">
+        {steps.map((s, idx) => (
+          <div class="relative group">
+            <!-- Stepper Node Marker on Vertical Line (Centered exactly on 1px border) -->
+            <div class="absolute -left-[32px] sm:-left-[40px] top-4 w-4 h-4 rounded-full border-2 border-[var(--color-border)] bg-[var(--color-bg)] transition-colors group-hover:border-[var(--color-accent)] group-hover:bg-[var(--color-accent)]"></div>
+
+            <div class="double-bezel-sm">
+              <div class="double-bezel-sm-inner p-4 sm:p-5 md:p-6">
+                <div class="flex items-center justify-between mb-2.5">
+                  <span class="font-mono text-xs font-semibold text-[var(--color-accent)]">
+                    <span data-i18n={s.phaseKey}>{s.phase}</span>
+                  </span>
+                  <span class="font-mono text-[10px] text-[var(--color-text-muted)] border border-[var(--color-border)] px-2 py-0.5 rounded-full bg-[var(--color-bg-panel)]">
+                    <span data-i18n={s.tagKey}>{s.tag}</span>
+                  </span>
+                </div>
+                <h3 data-i18n={s.titleKey} class="text-heading-sm font-display font-semibold text-[var(--color-text)] mb-2">
+                  {s.title}
+                </h3>
+                <p data-i18n={s.bodyKey} class="text-body-sm text-[var(--color-text-secondary)] leading-relaxed">
+                  {s.body}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,100 @@
+---
+import '../styles/global.css';
+
+const {
+  title = 'QR Studio : Precision QR Code Studio',
+  description = 'Create and customize QR codes with colors, gradients, logos, frames, patterns, and more.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en" class="dark h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Caveat:wght@600;700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script is:inline>
+      try {
+        const stored = localStorage.getItem('theme');
+        // Default to dark theme unless explicitly saved as 'light'
+        if (stored === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+      }
+
+      try {
+        const storedLang = localStorage.getItem('qr_language');
+        if (storedLang === 'ar') {
+          document.documentElement.setAttribute('lang', 'ar');
+          document.documentElement.setAttribute('dir', 'rtl');
+        } else {
+          document.documentElement.setAttribute('lang', 'en');
+          document.documentElement.setAttribute('dir', 'ltr');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="min-h-[100dvh] bg-[var(--color-bg)] text-[var(--color-text)] antialiased transition-colors duration-200 font-sans selection:bg-[var(--color-accent)] selection:text-white relative">
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <slot />
+    <script is:inline>
+      if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('reveal-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+        const observeAll = () => {
+          document.querySelectorAll('.reveal-init:not(.reveal-visible)').forEach((el) => {
+            observer.observe(el);
+          });
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', observeAll);
+        } else {
+          observeAll();
+        }
+      }
+    </script>
+    <script>
+      import { getInitialLang, applyDOMTranslations } from '../lib/i18n/translations.js';
+
+      const initI18n = () => {
+        const lang = getInitialLang();
+        applyDOMTranslations(lang);
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initI18n);
+      } else {
+        initI18n();
+      }
+
+      window.addEventListener('languagechange', (e) => {
+        const lang = 'detail' in e && e.detail ? e.detail.lang : null;
+        if (lang) {
+          applyDOMTranslations(lang);
+        }
+      });
+    </script>
+  </body>
+</html>
