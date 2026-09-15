@@ -17,11 +17,28 @@ pnpm-debug.log*
 # Environment variables
 .env
 .env.*
+!.env.example
+
+# Secrets and local certificates
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+credentials.json
+secrets.json
 
 # OS files
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Coverage and local tool caches
+coverage/
+.cache/
+.vercel/
+.netlify/
 
 # IDE / Editors
 .vscode/
