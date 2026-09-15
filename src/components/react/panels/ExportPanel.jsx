@@ -65,8 +65,9 @@ export function ExportPanel({ config, notify, lang = 'en' }) {
     try {
       await downloadQR(config, { format, size, quality: 0.92, fileName: 'qr-studio' });
       notify?.(lang === 'ar' ? `تم تنزيل رمز QR بصيغة ${format.toUpperCase()}` : `Downloaded QR code as ${format.toUpperCase()}`, 'success');
-    } catch (e) {
-      notify?.(localizeValidationError(e.message || (lang === 'ar' ? 'فشل التصدير.' : 'Export failed.'), lang), 'error');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : t('toast.exportFailed', lang);
+      notify?.(localizeValidationError(message, lang), 'error');
     } finally {
       setBusy(false);
     }

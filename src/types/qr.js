@@ -4,36 +4,7 @@
 export const DOT_STYLES = ['square', 'rounded', 'dots', 'classy', 'classy-rounded', 'extra-rounded'];
 export const EYE_FRAME_STYLES = ['square', 'rounded', 'circle', 'extra-rounded', 'dots', 'classy', 'classy-rounded'];
 export const EYE_CENTER_STYLES = ['square', 'rounded', 'circle', 'dots', 'classy', 'classy-rounded'];
-export const GRADIENT_DIRS = ['horizontal', 'vertical', 'diagonal', 'radial'];
 export const EC_LEVELS = ['L', 'M', 'Q', 'H'];
-export const FRAME_TYPES = [
-  'none',
-  'badge-bottom',
-  'arrow-cursive',
-  'cursive',
-  'envelope',
-  'camera-pill',
-  'tooltip-pointer',
-  'speech-bubble',
-  'phone',
-  'ribbon',
-  'chef-hat',
-  'delivery-scooter',
-  'coffee-cup',
-  'gift-box',
-  'coffee-takeout',
-  'energy-burst',
-  'shopping-bag',
-  'simple',
-  'rounded',
-  'modern',
-  'scan-me',
-  'badge',
-  'top-label',
-  'bottom-label',
-];
-export const EXPORT_FORMATS = ['png', 'jpg', 'webp', 'svg'];
-export const EXPORT_SIZES = [512, 1024, 2048];
 
 export function defaultQRConfig() {
   return {

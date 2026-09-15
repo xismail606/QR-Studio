@@ -1,18 +1,37 @@
+import { mergeConfig } from '../config/mergeConfig.js';
+import { defaultQRConfig } from '../../types/qr.js';
+
 const KEY = 'qr-studio:designs';
 const LAST_KEY = 'qr-studio:last-config';
 
-function readAll() {
+function isRecord(candidate) {
+  return candidate !== null && typeof candidate === 'object' && !Array.isArray(candidate);
+}
+
+function normalizeSavedDesign(candidate) {
+  if (!isRecord(candidate)) return null;
+  if (typeof candidate.id !== 'string' || typeof candidate.name !== 'string') return null;
+  if (typeof candidate.createdAt !== 'number' || typeof candidate.updatedAt !== 'number') return null;
+  if (!isRecord(candidate.config)) return null;
+
+  return {
+    ...candidate,
+    config: mergeConfig(defaultQRConfig(), candidate.config),
+  };
+}
+
+function readSavedDesigns() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return [];
     const arr = JSON.parse(raw);
-    return Array.isArray(arr) ? arr : [];
+    return Array.isArray(arr) ? arr.map(normalizeSavedDesign).filter(Boolean) : [];
   } catch {
     return [];
   }
 }
 
-function writeAll(designs) {
+function writeSavedDesigns(designs) {
   try {
     localStorage.setItem(KEY, JSON.stringify(designs));
     return true;
@@ -22,11 +41,11 @@ function writeAll(designs) {
 }
 
 export function listDesigns() {
-  return readAll().sort((a, b) => b.updatedAt - a.updatedAt);
+  return readSavedDesigns().sort((a, b) => b.updatedAt - a.updatedAt);
 }
 
 export function saveDesign(name, config) {
-  const designs = readAll();
+  const designs = readSavedDesigns();
   const now = Date.now();
   const entry = {
     id: `d-${now.toString(36)}`,
@@ -36,19 +55,21 @@ export function saveDesign(name, config) {
     updatedAt: now,
   };
   designs.push(entry);
-  if (!writeAll(designs)) throw new Error('Could not save — storage is full or unavailable.');
+  if (!writeSavedDesigns(designs)) throw new Error('Could not save — storage is full or unavailable.');
   return entry;
 }
 
 export function deleteDesign(id) {
-  writeAll(readAll().filter((d) => d.id !== id));
+  writeSavedDesigns(readSavedDesigns().filter((design) => design.id !== id));
 }
 
 export function loadLastConfig(fallback) {
   try {
     const raw = localStorage.getItem(LAST_KEY);
     if (!raw) return fallback;
-    return { ...fallback, ...JSON.parse(raw) };
+    const savedConfig = JSON.parse(raw);
+    if (!savedConfig || typeof savedConfig !== 'object' || Array.isArray(savedConfig)) return fallback;
+    return mergeConfig(fallback, savedConfig);
   } catch {
     return fallback;
   }

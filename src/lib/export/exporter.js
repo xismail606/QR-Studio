@@ -1,4 +1,5 @@
 import { createQRInstance } from '../qr/adapter.js';
+import { getContrastTextColor } from '../qr/colors.js';
 import { sanitizeLabel } from '../qr/validation.js';
 
 function loadImage(blob) {
@@ -26,16 +27,6 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.arcTo(x, y + h, x, y, rr);
   ctx.arcTo(x, y, x + w, y, rr);
   ctx.closePath();
-}
-
-function getContrastColor(hex) {
-  if (!hex || hex === 'transparent') return '#ffffff';
-  let c = hex.replace('#', '');
-  if (c.length === 3) c = c[0] + c[0] + c[1] + c[1] + c[2] + c[2];
-  const r = parseInt(c.substring(0, 2), 16) || 0;
-  const g = parseInt(c.substring(2, 4), 16) || 0;
-  const b = parseInt(c.substring(4, 6), 16) || 0;
-  return (r * 299 + g * 587 + b * 114) / 1000 >= 140 ? '#0f172a' : '#ffffff';
 }
 
 function getDefaultFrameText(type) {
@@ -68,7 +59,7 @@ async function compositeWithFrame(config, qrBlob, size) {
   const hasFrame = type !== 'none';
   const frameColor = config.frame.color || '#111827';
   const frameBg = config.frame.background || '#ffffff';
-  const contrastText = getContrastColor(frameColor);
+  const contrastText = getContrastTextColor(frameColor);
 
   const topText = config.text.enabled && config.text.top ? sanitizeLabel(config.text.top) : '';
   const frameText = config.frame.text ? sanitizeLabel(config.frame.text) : getDefaultFrameText(type);

@@ -1,3 +1,5 @@
+import { mergeConfig } from '../config/mergeConfig.js';
+
 // Curated presets: data only, no UI logic.
 export const PRESETS = [
   {
@@ -158,18 +160,5 @@ export const PRESETS = [
 export function applyPreset(config, presetId) {
   const preset = PRESETS.find((p) => p.id === presetId);
   if (!preset) return config;
-  return deepMerge(config, preset.patch);
-}
-
-function deepMerge(base, patch) {
-  const out = { ...base };
-  for (const key of Object.keys(patch)) {
-    const pv = patch[key];
-    if (pv && typeof pv === 'object' && !Array.isArray(pv)) {
-      out[key] = { ...(base[key] ?? {}), ...pv };
-    } else {
-      out[key] = pv;
-    }
-  }
-  return out;
+  return mergeConfig(config, preset.patch);
 }

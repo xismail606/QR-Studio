@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { 
   Undo2, 
   Redo2, 
@@ -70,27 +70,22 @@ export function QREditor() {
     return () => window.removeEventListener('languagechange', handleLangChange);
   }, []);
 
+  const notify = useCallback((message, kind = 'success') => {
+    const id = Math.random().toString(36).slice(2);
+    setToasts((t) => [...t, { id, message, kind }]);
+    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3200);
+  }, []);
+
   // Templates link here as /generator?preset=<id> : apply once on mount.
   useEffect(() => {
     if (presetApplied.current) return;
     presetApplied.current = true;
-    try {
-      const id = new URLSearchParams(window.location.search).get('preset');
-      if (id && PRESETS.some((p) => p.id === id)) {
-        qr.applyPresetById(id);
-        notify(t('toast.loadedPreset', lang, { name: id }), 'success');
-      }
-    } catch {
-      /* ignore malformed URLs */
+    const id = new URLSearchParams(window.location.search).get('preset');
+    if (id && PRESETS.some((p) => p.id === id)) {
+      qr.applyPresetById(id);
+      notify(t('toast.loadedPreset', lang, { name: id }), 'success');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  function notify(message, kind = 'success') {
-    const id = Math.random().toString(36).slice(2);
-    setToasts((t) => [...t, { id, message, kind }]);
-    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3200);
-  }
+  }, [lang, notify, qr.applyPresetById]);
 
   const panels = useMemo(
     () => ({
@@ -103,8 +98,7 @@ export function QREditor() {
       Advanced: <AdvancedPanel config={config} update={qr.update} updateNow={qr.updateNow} lang={lang} />,
       Export: <ExportPanel config={config} notify={notify} lang={lang} />,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [config, lang]
+    [config, lang, notify, qr.update, qr.updateNow]
   );
 
   async function onCopyImage() {
@@ -141,8 +135,9 @@ export function QREditor() {
       setDesignName('');
       setShowSaved(true);
       notify(t('toast.saved', lang));
-    } catch (e) {
-      notify(localizeValidationError(e.message, lang), 'error');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : t('toast.saveFailed', lang);
+      notify(localizeValidationError(message, lang), 'error');
     }
   }
 
@@ -288,7 +283,7 @@ export function QREditor() {
       <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-[minmax(280px,400px)_minmax(0,1fr)] xl:grid-cols-[minmax(340px,440px)_minmax(0,1fr)]">
         {/* Left Side: Sticky Preview Canvas */}
         <div className={`space-y-4 ${mobileView === 'controls' ? 'hidden lg:block' : 'block'}`}>
-           <QRPreview config={config} lang={lang} />
+           <QRPreview config={config} lang={lang} notify={notify} />
         </div>
 
         {/* Right Side: Studio Control Decks */}

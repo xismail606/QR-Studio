@@ -2,22 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { Download, Sparkles, Copy, Check } from 'lucide-react';
 import { createQRInstance } from '@/lib/qr/adapter.js';
 import { validateContent } from '@/lib/qr/contentTypes.js';
+import { getContrastTextColor } from '@/lib/qr/colors.js';
 import { downloadQR, copyQRImage } from '@/lib/export/exporter.js';
 import { ReadabilityIndicator } from '../ui/ReadabilityIndicator.jsx';
 import { t } from '@/lib/i18n/translations.js';
 
 const PREVIEW_SIZE = 320;
-
-function getContrastTextColor(hex) {
-  if (!hex || hex === 'transparent') return '#ffffff';
-  let c = hex.replace('#', '');
-  if (c.length === 3) c = c[0] + c[0] + c[1] + c[1] + c[2] + c[2];
-  const r = parseInt(c.substring(0, 2), 16) || 0;
-  const g = parseInt(c.substring(2, 4), 16) || 0;
-  const b = parseInt(c.substring(4, 6), 16) || 0;
-  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-  return yiq >= 140 ? '#0f172a' : '#ffffff';
-}
 
 function getDefaultFrameText(type, lang) {
   switch (type) {
@@ -33,7 +23,7 @@ function getDefaultFrameText(type, lang) {
   }
 }
 
-export function QRPreview({ config, lang = 'en' }) {
+export function QRPreview({ config, lang = 'en', notify }) {
   const mountRef = useRef(null);
   const instRef = useRef(null);
   const latestRef = useRef(config);
@@ -46,6 +36,19 @@ export function QRPreview({ config, lang = 'en' }) {
 
   useEffect(() => {
     let alive = true;
+
+    // The QR mount node is not rendered while content is invalid. Wait for it
+    // to exist before creating the instance so entering the first URL works
+    // without requiring a page refresh.
+    if (invalid) {
+      instRef.current = null;
+      setRenderState('loading');
+      return () => {
+        alive = false;
+      };
+    }
+
+    setRenderState('loading');
     createQRInstance(latestRef.current, PREVIEW_SIZE)
       .then((inst) => {
         if (!alive) return;
@@ -56,20 +59,35 @@ export function QRPreview({ config, lang = 'en' }) {
         }
         setRenderState('ready');
       })
-      .catch(() => {
-        if (alive) setRenderState('error');
+      .catch((error) => {
+        if (!alive) return;
+        if (error instanceof Error) {
+          setRenderState('error');
+          return;
+        }
+        throw error;
       });
     return () => {
       alive = false;
     };
-  }, []);
+  }, [invalid]);
 
   useEffect(() => {
+    if (invalid) return undefined;
     const t = setTimeout(() => {
-      instRef.current?.update(config, PREVIEW_SIZE);
+      if (!instRef.current || !mountRef.current) return;
+      try {
+        instRef.current.update(config, PREVIEW_SIZE);
+      } catch (error) {
+        if (error instanceof Error) {
+          setRenderState('error');
+          return;
+        }
+        throw error;
+      }
     }, 80);
     return () => clearTimeout(t);
-  }, [config]);
+  }, [config, invalid]);
 
   async function quickDownload(format) {
     if (invalid || downloading) return;
@@ -77,7 +95,7 @@ export function QRPreview({ config, lang = 'en' }) {
     try {
       await downloadQR(config, { format, size: 1024, quality: 0.92, fileName: 'qr-studio' });
     } catch {
-      /* ignore */
+      notify?.(t('toast.exportFailed', lang), 'error');
     } finally {
       setDownloading(false);
     }
@@ -90,7 +108,7 @@ export function QRPreview({ config, lang = 'en' }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
     } catch {
-      /* ignore */
+      notify?.(t('toast.copyFailed', lang), 'error');
     }
   }
 

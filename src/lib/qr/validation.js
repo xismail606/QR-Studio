@@ -1,10 +1,5 @@
-const HEX = /^#[0-9a-fA-F]{6}$/;
 const MAX_LOGO_BYTES = 2 * 1024 * 1024;
 const ALLOWED_LOGO_MIME = new Set(['image/png', 'image/jpeg', 'image/webp']);
-
-export function isHexColor(v) {
-  return HEX.test(v);
-}
 
 export function validateLogoFile(file) {
   if (!ALLOWED_LOGO_MIME.has(file.type)) {

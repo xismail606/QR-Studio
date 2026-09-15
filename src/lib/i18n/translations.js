@@ -151,6 +151,8 @@ export const translations = {
     'toast.shareReady': 'Image copied: ready to paste',
     'toast.shareUnsupported': 'Share is not supported here.',
     'toast.saved': 'Design saved to local studio library',
+    'toast.saveFailed': 'Could not save this design.',
+    'toast.exportFailed': 'Export failed. Please try again.',
     'toast.reset': 'All settings, content, and links reset to factory defaults',
 
     // Panels
@@ -628,6 +630,8 @@ export const translations = {
     'toast.shareReady': 'تم نسخ الصورة وهي جاهزة للصق',
     'toast.shareUnsupported': 'المشاركة غير مدعومة هنا.',
     'toast.saved': 'تم حفظ التصميم في مكتبة الاستوديو المحلية',
+    'toast.saveFailed': 'تعذر حفظ هذا التصميم.',
+    'toast.exportFailed': 'فشل التصدير. حاول مرة أخرى.',
     'toast.reset': 'تمت إعادة كل الإعدادات والمحتوى والروابط للوضع الافتراضي',
 
     // Panels

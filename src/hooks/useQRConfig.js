@@ -1,21 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { defaultQRConfig } from '@/types/qr.js';
+import { mergeConfig } from '@/lib/config/mergeConfig.js';
 import { loadLastConfig, persistLastConfig, clearLastConfig } from '@/lib/storage/savedDesigns.js';
 import { applyPreset } from '@/lib/presets/presets.js';
 import { randomizeVisuals } from '@/lib/presets/randomize.js';
 
 const HISTORY_LIMIT = 50;
-const SLIDER_DEBOUNCE_MS = 200;
-
-function mergeDeep(base, patch) {
-  const out = { ...base };
-  for (const k of Object.keys(patch)) {
-    const v = patch[k];
-    if (v && typeof v === 'object' && !Array.isArray(v)) out[k] = { ...(base[k] ?? {}), ...v };
-    else out[k] = v;
-  }
-  return out;
-}
+const CONFIG_UPDATE_DEBOUNCE_MS = 200;
 
 export function useQRConfig() {
   const [config, setConfig] = useState(() => loadLastConfig(defaultQRConfig()));
@@ -55,17 +46,17 @@ export function useQRConfig() {
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       pushHistory();
-      const next = mergeDeep(configRef.current, patch);
+      const next = mergeConfig(configRef.current, patch);
       configRef.current = next;
       setConfig(next);
-    }, SLIDER_DEBOUNCE_MS);
+    }, CONFIG_UPDATE_DEBOUNCE_MS);
   }, [pushHistory]);
 
   // Immediate: segmented picks, toggles, file ops.
   const updateNow = useCallback((patch) => {
     if (timer.current) clearTimeout(timer.current);
     pushHistory();
-    const next = mergeDeep(configRef.current, patch);
+    const next = mergeConfig(configRef.current, patch);
     configRef.current = next;
     setConfig(next);
   }, [pushHistory]);
