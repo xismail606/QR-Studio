@@ -191,13 +191,24 @@ export function ToggleSwitch({ checked, onChange, label }) {
 }
 
 export function TextInput({ value, onChange, placeholder, ariaLabel, multiline = false }) {
+  const [draft, setDraft] = useState(value ?? '');
+
+  useEffect(() => {
+    setDraft(value ?? '');
+  }, [value]);
+
+  function handleChange(nextValue) {
+    setDraft(nextValue);
+    onChange(nextValue);
+  }
+
   const cls = 'w-full rounded-xl px-3.5 py-2.5 text-xs sm:text-sm border border-[var(--color-border)] bg-[var(--color-bg-panel)] text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-accent)] focus:bg-[var(--color-bg-card)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all font-sans';
   if (multiline) {
     return (
-      <textarea aria-label={ariaLabel} dir="auto" rows={3} className={cls} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
+      <textarea aria-label={ariaLabel} dir="auto" rows={3} className={cls} value={draft} placeholder={placeholder} onChange={(e) => handleChange(e.target.value)} />
     );
   }
   return (
-    <input aria-label={ariaLabel} dir="auto" className={cls} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
+    <input aria-label={ariaLabel} dir="auto" className={cls} value={draft} placeholder={placeholder} onChange={(e) => handleChange(e.target.value)} />
   );
 }

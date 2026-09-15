@@ -87,6 +87,8 @@ Contextual frames designed for physical retail, events, packaging, and digital s
 
 This project was built as a hands-on project to improve practical skills in AI-assisted software development and agentic AI workflows. The goal was to use AI tools as engineering collaborators while still validating the resulting code, interface behavior, accessibility, localization, and tests.
 
+Approximately **80% of the project was developed with AI assistance**. The implementation was then reviewed, tested, refined, and visually validated by the author.
+
 Tools and references used during development included:
 
 - Codex
@@ -216,7 +218,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 <!-- ===================== FOOTER ===================== -->
 <div align="center">
-  <img 
+  <img
     src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=110&section=footer"
     alt="GitHub Footer"
     width="100%"
